@@ -1,0 +1,21 @@
+Link to the problem- https://www.codingninjas.com/codestudio/problems/subset-sum-equal-to-k_1550954?topList=striver-sde-sheet-problems
+Solution to the problem- 
+
+bool subsetSumToK(int n, int k, vector<int> &arr) {
+    // Write your code here.
+    vector<bool> prev(k+1,false),cur(k+1,false);
+    prev[0]=cur[0]=true;
+    prev[arr[0]]=true;
+    for(int i=1;i<n;i++)
+    {
+        for(int tar=0;tar<=k;tar++)
+        {
+            bool ntake=prev[tar];
+            bool take=false;
+            if(tar>=arr[i])    take=prev[tar-arr[i]];
+            cur[tar]=take|ntake;
+        }
+        prev=cur;
+    }
+    return prev[k];
+}
