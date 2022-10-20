@@ -1,0 +1,19 @@
+ll binsearch(ll key,ll start, ll end, vll &v)
+{
+    ll ans = -1;
+    while(start <= end)
+    {
+        ll mid = start + (end - start) / 2;
+        if(v[mid] == key)
+        {
+            ans = mid;
+            break;
+        }
+        else if(v[mid] < key)
+        {
+            start = mid + 1;
+        }
+        else  end = mid - 1;
+     }
+     return ans;
+}
