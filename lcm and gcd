@@ -1,0 +1,10 @@
+ll lcm(ll x, ll y)
+{
+    return ((x*y)/gcd(x,y));
+}
+
+ll gcd (ll x, ll y)
+{
+    if(y==0)    return x;
+    return gcd(y,x%y);
+}
