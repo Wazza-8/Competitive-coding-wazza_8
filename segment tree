@@ -1,0 +1,67 @@
+void buildsegtree(ll ind,ll low,ll high,map <int, map <int,int> > &mp, vector< bool > &seg)
+{
+    if(mp[low][high])
+    {
+        seg[ind] = true;
+    }
+    if(low==high)
+    {
+        return;
+    }
+
+    ll mid=(low+(high-low)/2);
+    // cout<<mid<<"-"<<endl;
+    buildsegtree(2*ind + 1, low, mid, mp, seg);
+
+    if(seg[ind] & seg[2*ind + 1])
+        seg[2*ind + 2] = true;
+
+    buildsegtree(2*ind + 2, mid + 1, high, mp, seg);
+
+    if(seg[ind] & seg[2*ind + 2])
+        seg[2*ind + 1] = true;
+
+    if(seg[2*ind + 1] & seg[2*ind + 2])
+        seg[ind] = true;
+}
+
+void query(ll ind,ll low,ll high,vector< bool > &seg, vector <int> &ans)
+{
+    if(low == high)
+    {
+        if(seg[ind])
+            ans.push_back(low);
+        return;
+    }
+    ll mid=(low+high)/2;
+    query(2*ind + 1, low, mid, seg, ans);
+    query(2*ind + 2, mid + 1, high, seg, ans);
+}
+
+void updatesegTree(int ind,int low,int high,int i,ll &val,vll &seg)
+{
+    if(low==high)
+    {
+        seg[ind]=val;
+        return;
+    }
+    int mid=(low+(high-low)/2);
+    if(i<=mid)  updatesegTree(2*ind+1,low,mid,i,val,seg);
+    else    updatesegTree(2*ind+2,mid+1,high,i,val,seg);
+
+    int check=(high-low+1);
+    int cnt=0;
+    while(check)
+    {
+        check/=2;
+        cnt++;
+    }
+    if(cnt%2)
+    {
+        seg[ind]=seg[2*ind+1]^seg[2*ind+2];
+    }
+    else
+    {
+        seg[ind]=seg[2*ind+1]|seg[2*ind+2];
+    }
+}
