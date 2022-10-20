@@ -1,0 +1,56 @@
+vector<int> calculateZ(string input)
+{
+    vector<int> z(input.size());
+    int left=0;
+    int right=0;
+    for(int k=1;k<input.size();k++)
+    {
+        if(k>right)
+        {
+            left=right=k;
+            while(right<input.size() && input[right]==input[right-left])
+            {
+                right++;
+            }
+            z[k]=right-left;
+            right--;
+        }
+        else
+        {
+            int k1=k-left;
+            if(z[k1]<right-k+1)
+            {
+                z[k]=z[k1];
+            }
+            else
+            {
+                left=k;
+                while(right<input.size() && input[right]==input[right-left])
+                {
+                    right++;
+                }
+                z[k]=right-left;
+                right--;
+            }
+        }
+    }
+    return z;
+}
+
+vector<int> matchPatternZalgo(string s,string p)
+{
+    string t="";
+    t+=p;
+    t+="$";
+    t+=s;
+    vector<int> result;
+    vector<int> z=calculateZ(t);
+    for(int i=0;i<z.size();i++)
+    {
+        if(z[i]== p.size())
+        {
+            result.pb(i-p.size()-1);
+        }
+    }
+    return result;
+}
