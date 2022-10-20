@@ -1,0 +1,29 @@
+vll seive(ll num2)
+{
+    vll v1;
+    for(ll i=2;i*i<=num2;i++)
+    {
+        if(num2%i==0)
+        {
+            v1.pb(i);
+            if(i!=num2/i)
+            {
+                v1.pb(num2/i);
+            }
+        }
+    }
+    return v1;
+}
+
+vector<int> factors(int n)
+{
+    vector<int> f;
+    for (int x = 2; x*x <= n; x++) {
+    while (n%x == 0) {
+    f.push_back(x);
+    n /= x;
+    }
+}
+if (n > 1) f.push_back(n);
+return f;
+}
